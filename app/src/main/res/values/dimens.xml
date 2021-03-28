@@ -6,4 +6,5 @@
     <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="dimen_30dp">30dp</dimen>
     <dimen name="dimen_alturaBotao">55dp</dimen>
+    <dimen name="dimen_18sp">18sp</dimen>
 </resources>
