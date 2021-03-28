@@ -2,6 +2,7 @@ package com.davingl.coletadepresenca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,12 +15,14 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UsuarioDAO usuarioDao;
-    private EditText editTextRGM;
-    private EditText editTextSenha;
-    private TextView textViewErroAcesso;
-    private Long rgm;
-    private String senha;
+    private UsuarioDAO usuarioDao;          //Acesso a base de dados
+    private EditText editTextRGM;           //RGM informado pelo usuario
+    private EditText editTextSenha;         //Senha informada pelo usuario
+    private TextView textViewErroAcesso;    //Label abaixo dos botões para exibir msg de erro
+    private Long rgm;                       //Auxiliar pra armazenar rgm
+    private String senha;                   //Auxiliar pra armazenar a senha
+    private Intent disciplinasActivity;     //Activity que será chamada
+
 
 
     @Override
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         this.editTextSenha = findViewById(R.id.editTextSenha);
 
         this.textViewErroAcesso = findViewById(R.id.textViewErroAcesso);
+
+        this.disciplinasActivity = new Intent(MainActivity.this, DisciplinasActivity.class);
     }
 
     /**
@@ -63,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         //Verifica se o usuario foi encontrado na base
         switch (acessoBase){
             case 0:
-                System.out.println("Achou na base");
+                //Vai para a outra activity
+                this.startActivity(this.disciplinasActivity);
                 break;
             case 1:
                 System.out.println("RGM inválido");
