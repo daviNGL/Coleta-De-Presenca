@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         switch (acessoBase){
             case 0:
                 System.out.println("Achou na base");
+                System.out.println("Achou na base");
                 break;
             case 1:
                 System.out.println("RGM inválido");
