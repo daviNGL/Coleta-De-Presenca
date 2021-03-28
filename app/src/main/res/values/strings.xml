@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Coleta De Presenca</string>
+    <string name="str_ColetaDePresenca">Coleta de Presença</string>
+    <string name="str_RGM">RGM</string>
+    <string name="str_Senha">Senha</string>
+    <string name="str_InformeSenha">Informe a senha aqui.</string>
+    <string name="str_informeRgmAqui">Informe o RGM aqui.</string>
+    <string name="str_Conectar">Conectar</string>
+    <string name="str_Sair">Sair</string>
 </resources>
