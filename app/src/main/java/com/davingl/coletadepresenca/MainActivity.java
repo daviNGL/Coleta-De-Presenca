@@ -52,4 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Encerra a aplicação após o usuário clicar no botão 'Sair'
+     * @param view
+     */
+    public void encerrarAplicacao(View view){
+
+        finish();
+
+    }
+
 }
