@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.davingl.coletadepresenca.dao.UsuarioDAO;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private UsuarioDAO usuarioDao;
     private EditText editTextRGM;
     private EditText editTextSenha;
     private Long rgm;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public void validaLogin(View view){
 
 
+
         //Tenta converter o rgm para um Long e seta no atributo "rgm"
         try{
             this.rgm = Long.parseLong( this.editTextRGM.getText().toString() );
@@ -43,14 +47,35 @@ public class MainActivity extends AppCompatActivity {
             this.rgm = 0l;
         }
 
+
         //Recupera a senha e seta no atributo "senha"
         this.senha = this.editTextSenha.getText().toString();
 
 
-        System.out.println("RGM = " + this.rgm);
-        System.out.println("Senha = " + this.senha);
+        //Busca o usuario na base de dados
+        this.usuarioDao = new UsuarioDAO(this.rgm, this.senha);
+        int acessoBase = this.usuarioDao.validaLogin();
+
+
+        //Verifica se o usuario foi encontrado na base
+        switch (acessoBase){
+            case 0:
+                System.out.println("Achou na base");
+                break;
+            case 1:
+                System.out.println("RGM inválido");
+                break;
+            case 2:
+                System.out.println("Senha incorreta");
+                break;
+            default:
+                System.out.println("Ferrou");
+                break;
+        }
 
     }
+
+
 
     /**
      * Encerra a aplicação após o usuário clicar no botão 'Sair'
