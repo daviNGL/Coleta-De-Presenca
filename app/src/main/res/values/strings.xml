@@ -7,4 +7,16 @@
     <string name="str_informeRgmAqui">Informe o RGM aqui.</string>
     <string name="str_Conectar">Conectar</string>
     <string name="str_Sair">Sair</string>
+    <string name="str_localizacao">Localização:</string>
+    <string name="str_registrarPResenca">Registrar Presença</string>
+    <string name="str_Cancelar">Cancelar</string>
+
+    <string-array name="disciplinasLista">
+        <item>Linguagens Formais e Autômatos</item>
+        <item>Trabalho de Graduação Interdisciplinar I </item>
+        <item>Programação Para Dispositivos Móveis</item>
+        <item>Inteligência artificial</item>
+        <item>Qualidade de software</item>
+    </string-array>
+
 </resources>

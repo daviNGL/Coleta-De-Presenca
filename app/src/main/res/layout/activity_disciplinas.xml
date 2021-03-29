@@ -21,10 +21,57 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
+        android:id="@+id/spinnerDisciplinas"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:entries="@array/disciplinasLista"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDataHora"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <TextView
+        android:id="@+id/textViewLocalizacao"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="112dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/str_localizacao"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDisciplinas" />
+
+    <Button
+        android:id="@+id/buttonRegistrarresenca"
+        android:layout_width="@dimen/dimen_150dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:layout_marginStart="32dp"
+        android:backgroundTint="@color/color_botao"
+        android:text="@string/str_registrarPResenca"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocalizacao"
+        app:layout_constraintVertical_bias="0.14" />
+
+    <Button
+        android:id="@+id/buttonCancelar"
+        android:layout_width="@dimen/dimen_150dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/color_botao"
+        android:text="@string/str_Cancelar"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocalizacao"
+        app:layout_constraintVertical_bias="0.14" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
