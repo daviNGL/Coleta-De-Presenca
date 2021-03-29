@@ -2,6 +2,7 @@ package com.davingl.coletadepresenca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,9 @@ public class DisciplinasActivity extends AppCompatActivity {
     private Location localizacaoUsuario;
     private static Location localizacaoUnicid;
 
+    private Intent presencaRegistradaActivity;
+    private Bundle bundle;
+
     //Vetor auxiliar de dias da semana
     private final String arrayDiasSemana[] =
             {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
@@ -36,9 +40,12 @@ public class DisciplinasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disciplinas);
 
-        this.textViewDataHora       = (TextView) findViewById(R.id.textViewDataHora);
-        this.textViewLocalizacao    = (TextView) findViewById(R.id.textViewLocalizacao);
-        this.spinnerDisciplinas     = (Spinner) findViewById(R.id.spinnerDisciplinas);
+        this.textViewDataHora           = (TextView) findViewById(R.id.textViewDataHora);
+        this.textViewLocalizacao        = (TextView) findViewById(R.id.textViewLocalizacao);
+        this.spinnerDisciplinas         = (Spinner) findViewById(R.id.spinnerDisciplinas);
+
+        this.bundle = new Bundle();
+        this.presencaRegistradaActivity = new Intent(DisciplinasActivity.this, PresencaRegistradaActivity.class);
 
         this.localizacaoUsuario = new Location("locationUsuario");
 
@@ -56,6 +63,8 @@ public class DisciplinasActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onResume() {
 
@@ -67,27 +76,6 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Atualiza a localização na tela
         this.textViewLocalizacao.setText("Localização: " +
                 this.localizacaoUsuario.getLatitude() + "  " + this.localizacaoUsuario.getLongitude());
-    }
-
-
-
-
-
-    /**
-     * Busca a localização atual do usuário e salva em localizacaoUsuario
-     */
-    private void buscaLocalizacao() {
-
-        //Precisa implementar esse método corretamente
-
-        ///////////////// LOCALIZAÇÃO FAKE ////////////////////
-//        this.localizacaoUsuario.setLatitude(35.72405);
-//        this.localizacaoUsuario.setLongitude(139.15889);
-
-        //////////////// LOCALIZACAO UNICID ///////////////////
-        this.localizacaoUsuario.setLatitude(-23.53628);
-        this.localizacaoUsuario.setLongitude(-46.56033);
-
     }
 
 
@@ -180,7 +168,7 @@ public class DisciplinasActivity extends AppCompatActivity {
 
 
         if(localizazoesIguais){
-
+            registraPresenca();
         }else{
 
             String msg = "Usuário precisa estar localizado na Unicid.";
@@ -191,9 +179,22 @@ public class DisciplinasActivity extends AppCompatActivity {
 
     }
 
+    private void registraPresenca() {
 
+        String dataHoraRegistro = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 
+        //Salva valores que podem ser usados na prox Activity
+        this.bundle.putString("aulaDeHoje", this.textViewDataHora.getText().toString());
+        this.bundle.putString("local", this.textViewLocalizacao.getText().toString());
+        this.bundle.putString("presencaReg", "Presença registrada em " + dataHoraRegistro);
+        this.bundle.putInt("disciplinaSelect", this.diaDaSemanaNumero);
 
+        //Passa o bundle pra Activity
+        this.presencaRegistradaActivity.putExtras(this.bundle);
+
+        startActivity(this.presencaRegistradaActivity);
+
+    }
 
 
     /**
@@ -208,5 +209,28 @@ public class DisciplinasActivity extends AppCompatActivity {
 
         return false;
     }
+
+
+
+
+
+
+    /**
+     * Busca a localização atual do usuário e salva em localizacaoUsuario
+     */
+    private void buscaLocalizacao() {
+
+        //Precisa implementar esse método corretamente
+
+        ///////////////// LOCALIZAÇÃO FAKE ////////////////////
+//        this.localizacaoUsuario.setLatitude(35.72405);
+//        this.localizacaoUsuario.setLongitude(139.15889);
+
+        //////////////// LOCALIZACAO UNICID ///////////////////
+        this.localizacaoUsuario.setLatitude(-23.53628);
+        this.localizacaoUsuario.setLongitude(-46.56033);
+
+    }
+
 
 }
