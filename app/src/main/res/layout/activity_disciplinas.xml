@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Aula de hoje (Quarta Feira - 17/02/2020)"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/dimen_20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +52,7 @@
 
     <Button
         android:id="@+id/buttonRegistrarresenca"
-        android:layout_width="@dimen/dimen_150dp"
+        android:layout_width="@dimen/dimen_120dp"
         android:layout_height="@dimen/dimen_70dp"
         android:layout_marginStart="32dp"
         android:backgroundTint="@color/color_botao"
@@ -65,7 +66,7 @@
 
     <Button
         android:id="@+id/buttonCancelar"
-        android:layout_width="@dimen/dimen_150dp"
+        android:layout_width="@dimen/dimen_120dp"
         android:layout_height="@dimen/dimen_70dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/color_botao"
