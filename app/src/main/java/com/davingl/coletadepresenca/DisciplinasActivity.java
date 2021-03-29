@@ -1,26 +1,34 @@
 package com.davingl.coletadepresenca;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DisciplinasActivity extends AppCompatActivity {
 
     private TextView textViewDataHora;
+    private TextView textViewLocalizacao;
+    private Spinner spinnerDisciplinas;
     private String diaDaSemana;
     private int diaDaSemanaNumero;
-    private Spinner spinnerDisciplinas;
+    private Location localizacaoUsuario;
+    private static Location localizacaoUnicid;
 
     //Vetor auxiliar de dias da semana
     private final String arrayDiasSemana[] =
             {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +36,11 @@ public class DisciplinasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disciplinas);
 
-        this.textViewDataHora   = (TextView) findViewById(R.id.textViewDataHora);
-        this.spinnerDisciplinas = (Spinner) findViewById(R.id.spinnerDisciplinas);
+        this.textViewDataHora       = (TextView) findViewById(R.id.textViewDataHora);
+        this.textViewLocalizacao    = (TextView) findViewById(R.id.textViewLocalizacao);
+        this.spinnerDisciplinas     = (Spinner) findViewById(R.id.spinnerDisciplinas);
+
+        this.localizacaoUsuario = new Location("locationUsuario");
 
         //Exibe o dia e a hora no topo da tela
         exibeDataHora();
@@ -37,8 +48,52 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Seleciona a disciplina correta de acordo com o dia da semana
         selecionaDisciplina();
 
+        //Seta a localização da UNICID
+        localizacaoUnicid = new Location("locationUnicid");
+        localizacaoUnicid.setLatitude(-23.53628);
+        localizacaoUnicid.setLongitude(-46.56033);
 
     }
+
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        //Busca a localização do usuario
+        buscaLocalizacao();
+
+        //Atualiza a localização na tela
+        this.textViewLocalizacao.setText("Localização: " +
+                this.localizacaoUsuario.getLatitude() + "  " + this.localizacaoUsuario.getLongitude());
+    }
+
+
+
+
+
+    /**
+     * Busca a localização atual do usuário e salva em localizacaoUsuario
+     */
+    private void buscaLocalizacao() {
+
+        //Precisa implementar esse método corretamente
+
+        ///////////////// LOCALIZAÇÃO FAKE ////////////////////
+//        this.localizacaoUsuario.setLatitude(35.72405);
+//        this.localizacaoUsuario.setLongitude(139.15889);
+
+        //////////////// LOCALIZACAO UNICID ///////////////////
+        this.localizacaoUsuario.setLatitude(-23.53628);
+        this.localizacaoUsuario.setLongitude(-46.56033);
+
+    }
+
+
+
+
+
 
     /**
      * Seleciona a disciplina correta no Spinner com base no dia da semana.
@@ -72,6 +127,9 @@ public class DisciplinasActivity extends AppCompatActivity {
     }
 
 
+
+
+
     /**
      * Descobre o dia da semana e a data, formata e exibe no TextView textViewDataHora
      */
@@ -93,12 +151,62 @@ public class DisciplinasActivity extends AppCompatActivity {
     }
 
 
+
+
+
     /**
      * Método que é disparado quando clicar no botão cancelar. Apenas volta pra Activity anteior.
      * @param view
      */
     public void btnCancelar(View view){
         finish();
+    }
+
+
+
+
+
+
+    /**
+     * Método ativado quando clica no botão de registrar presença
+     */
+    public void btnRegistrar(View view){
+
+        //Atualiza a localização do usuário
+        buscaLocalizacao();
+
+        //Verifica se o usuário está na UNICID
+        boolean localizazoesIguais = comparaLocalizacoes();
+
+
+        if(localizazoesIguais){
+
+        }else{
+
+            String msg = "Usuário precisa estar localizado na Unicid.";
+
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+
+
+
+
+
+    /**
+     * Compara a localização do usuário com a da Unicid
+     * @return
+     */
+    private boolean comparaLocalizacoes() {
+
+        if( localizacaoUnicid.getLatitude()  == this.localizacaoUsuario.getLatitude() &&
+            localizacaoUnicid.getLongitude() == this.localizacaoUsuario.getLongitude()  )
+                return true;
+
+        return false;
     }
 
 }

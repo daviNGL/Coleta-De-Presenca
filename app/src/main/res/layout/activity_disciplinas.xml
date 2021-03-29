@@ -54,6 +54,7 @@
         android:layout_height="@dimen/dimen_70dp"
         android:layout_marginStart="32dp"
         android:backgroundTint="@color/color_botao"
+        android:onClick="btnRegistrar"
         android:text="@string/str_registrarPResenca"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
