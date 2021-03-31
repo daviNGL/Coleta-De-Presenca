@@ -49,6 +49,9 @@ public class DisciplinasActivity extends AppCompatActivity {
 
         this.localizacaoUsuario = new Location("locationUsuario");
 
+        // Desabilitar spinner
+        this.spinnerDisciplinas.setEnabled(false);
+
         //Exibe o dia e a hora no topo da tela
         exibeDataHora();
 
