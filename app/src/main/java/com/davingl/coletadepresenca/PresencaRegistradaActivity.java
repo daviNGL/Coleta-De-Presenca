@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,7 +50,11 @@ public class PresencaRegistradaActivity extends AppCompatActivity {
 
     }
 
+    public void fecharAplicacao(View view){
 
+        finish();
+
+    }
 
 
 }

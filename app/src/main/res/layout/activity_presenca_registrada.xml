@@ -71,6 +71,7 @@
         android:layout_width="@dimen/dimen_150dp"
         android:layout_height="@dimen/dimen_70dp"
         android:backgroundTint="@color/color_botao"
+        android:onClick="fecharAplicacao"
         android:text="@string/str_Sair"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
