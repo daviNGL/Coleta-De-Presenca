@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class DisciplinasActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -55,12 +57,14 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Seleciona a disciplina correta de acordo com o dia da semana
         selecionaDisciplina();
 
+
         //Seta a localização da UNICID
         localizacaoUnicid = new Location("locationUnicid");
         localizacaoUnicid.setLatitude(-23.53628);
         localizacaoUnicid.setLongitude(-46.56033);
 
     }
+
 
 
 
@@ -77,6 +81,7 @@ public class DisciplinasActivity extends AppCompatActivity {
         this.textViewLocalizacao.setText("Localização: " +
                 this.localizacaoUsuario.getLatitude() + "  " + this.localizacaoUsuario.getLongitude());
     }
+
 
 
 
@@ -110,7 +115,7 @@ public class DisciplinasActivity extends AppCompatActivity {
 
         }
 
-        //this.spinnerDisciplinas.setEnabled(false);
+        this.spinnerDisciplinas.setEnabled(false);
 
     }
 
@@ -179,6 +184,11 @@ public class DisciplinasActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
+
     private void registraPresenca() {
 
         String dataHoraRegistro = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
@@ -195,6 +205,11 @@ public class DisciplinasActivity extends AppCompatActivity {
         startActivity(this.presencaRegistradaActivity);
 
     }
+
+
+
+
+
 
 
     /**

@@ -28,6 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_height="@dimen/dimen_50dp"
         android:entries="@array/disciplinasLista"
+        android:background="#D8D3D3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
