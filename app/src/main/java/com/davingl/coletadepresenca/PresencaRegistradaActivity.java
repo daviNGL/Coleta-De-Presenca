@@ -52,8 +52,7 @@ public class PresencaRegistradaActivity extends AppCompatActivity {
 
     public void fecharAplicacao(View view){
 
-        finish();
-
+        finishAffinity();
     }
 
 
