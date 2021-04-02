@@ -39,6 +39,31 @@ public class MainActivity extends AppCompatActivity {
         this.disciplinasActivity = new Intent(MainActivity.this, DisciplinasActivity.class);
     }
 
+
+    /*
+     *   Limpa os dados preenchidos ao voltar para mainAcativity.
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        if (!this.editTextRGM.getText().toString().isEmpty()) {
+
+            this.editTextRGM.setText("");
+        }
+
+        if (!this.editTextSenha.getText().toString().isEmpty()) {
+
+            this.editTextSenha.setText("");
+        }
+
+        if (!this.textViewErroAcesso.getText().toString().isEmpty()) {
+
+            this.textViewErroAcesso.setText("");
+        }
+    }
+
+
     /**
      * Método que é disparado ao clicar no botão de Login.
      * Recupera RGM e senha da view, e acessa a base de dados.
