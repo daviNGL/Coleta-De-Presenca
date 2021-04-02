@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class DisciplinasActivity extends AppCompatActivity {
     private TextView textViewDataHora;
     private TextView textViewLocalizacao;
     private Spinner spinnerDisciplinas;
+    private Button buttonRegistrarPresenca;
     private String diaDaSemana;
     private int diaDaSemanaNumero;
     private Location localizacaoUsuario;
@@ -45,6 +47,7 @@ public class DisciplinasActivity extends AppCompatActivity {
         this.textViewDataHora           = (TextView) findViewById(R.id.textViewDataHora);
         this.textViewLocalizacao        = (TextView) findViewById(R.id.textViewLocalizacao);
         this.spinnerDisciplinas         = (Spinner) findViewById(R.id.spinnerDisciplinas);
+        this.buttonRegistrarPresenca    = (Button) findViewById(R.id.buttonRegistrarPresenca);
 
         this.bundle = new Bundle();
         this.presencaRegistradaActivity = new Intent(DisciplinasActivity.this, PresencaRegistradaActivity.class);
@@ -112,6 +115,7 @@ public class DisciplinasActivity extends AppCompatActivity {
                 break;
             default:
                 this.spinnerDisciplinas.setSelection(5);
+                this.buttonRegistrarPresenca.setEnabled(false);
 
         }
 
