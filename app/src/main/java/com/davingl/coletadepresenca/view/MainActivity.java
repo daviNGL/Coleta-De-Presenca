@@ -1,4 +1,4 @@
-package com.davingl.coletadepresenca;
+package com.davingl.coletadepresenca.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.davingl.coletadepresenca.R;
 import com.davingl.coletadepresenca.dao.UsuarioDAO;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,15 +95,12 @@ public class MainActivity extends AppCompatActivity {
                 this.startActivity(this.disciplinasActivity);
                 break;
             case 1:
-                System.out.println("RGM inválido");
                 this.textViewErroAcesso.setText("RGM inválido!");
                 break;
             case 2:
-                System.out.println("Senha incorreta");
                 this.textViewErroAcesso.setText("Senha incorreta!");
                 break;
             default:
-                System.out.println("Ferrou");
                 this.textViewErroAcesso.setText("Erro inesperado.");
                 break;
         }

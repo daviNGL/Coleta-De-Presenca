@@ -1,4 +1,4 @@
-package com.davingl.coletadepresenca;
+package com.davingl.coletadepresenca.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.davingl.coletadepresenca.R;
+import com.davingl.coletadepresenca.core.AppUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -65,7 +67,6 @@ public class DisciplinasActivity extends AppCompatActivity {
         localizacaoUnicid = new Location("locationUnicid");
         localizacaoUnicid.setLatitude(-23.53628);
         localizacaoUnicid.setLongitude(-46.56033);
-
     }
 
 
@@ -80,9 +81,10 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Busca a localização do usuario
         buscaLocalizacao();
 
+        String txtLocalizacao = "Localização: " + this.localizacaoUsuario.getLatitude() + "  " + this.localizacaoUsuario.getLongitude();
+
         //Atualiza a localização na tela
-        this.textViewLocalizacao.setText("Localização: " +
-                this.localizacaoUsuario.getLatitude() + "  " + this.localizacaoUsuario.getLongitude());
+        this.textViewLocalizacao.setText(txtLocalizacao);
     }
 
 
@@ -133,11 +135,11 @@ public class DisciplinasActivity extends AppCompatActivity {
     private void exibeDataHora() {
 
         //Descobre a data e formata pro formato dd/mm/aaaa
-        String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String dataFormatada = AppUtil.buscarDataFormatada();
 
         //Descobre o dia da semana
-        int dia = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        dia--;
+        int dia = AppUtil.buscarDiaDaSemana() - 1;
+
         String diaDaSemana = arrayDiasSemana[dia];
 
         //Exibe dia da semana e data no TextView textViewDataHora
@@ -173,7 +175,7 @@ public class DisciplinasActivity extends AppCompatActivity {
         buscaLocalizacao();
 
         //Verifica se o usuário está na UNICID
-        boolean localizazoesIguais = comparaLocalizacoes();
+        boolean localizazoesIguais = AppUtil.compararLocalizacoes(this.localizacaoUsuario, localizacaoUnicid);
 
 
         if(localizazoesIguais){
@@ -215,25 +217,6 @@ public class DisciplinasActivity extends AppCompatActivity {
 
 
 
-
-    /**
-     * Compara a localização do usuário com a da Unicid
-     * @return
-     */
-    private boolean comparaLocalizacoes() {
-
-        if( localizacaoUnicid.getLatitude()  == this.localizacaoUsuario.getLatitude() &&
-            localizacaoUnicid.getLongitude() == this.localizacaoUsuario.getLongitude()  )
-                return true;
-
-        return false;
-    }
-
-
-
-
-
-
     /**
      * Busca a localização atual do usuário e salva em localizacaoUsuario
      */
@@ -242,12 +225,12 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Precisa implementar esse método corretamente
 
         ///////////////// LOCALIZAÇÃO FAKE ////////////////////
-//        this.localizacaoUsuario.setLatitude(35.72405);
-//        this.localizacaoUsuario.setLongitude(139.15889);
+        this.localizacaoUsuario.setLatitude(35.72405);
+        this.localizacaoUsuario.setLongitude(139.15889);
 
         //////////////// LOCALIZACAO UNICID ///////////////////
-        this.localizacaoUsuario.setLatitude(-23.53628);
-        this.localizacaoUsuario.setLongitude(-46.56033);
+//        this.localizacaoUsuario.setLatitude(-23.53628);
+//        this.localizacaoUsuario.setLongitude(-46.56033);
 
     }
 

@@ -8,7 +8,7 @@
     android:columnCount="2"
     android:rowCount="7"
     android:useDefaultMargins="true"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
 
     <TextView

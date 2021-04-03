@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColetaDePresenca">
-        <activity android:name=".PresencaRegistradaActivity"></activity>
-        <activity android:name=".DisciplinasActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.PresencaRegistradaActivity"></activity>
+        <activity android:name=".view.DisciplinasActivity"></activity>
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

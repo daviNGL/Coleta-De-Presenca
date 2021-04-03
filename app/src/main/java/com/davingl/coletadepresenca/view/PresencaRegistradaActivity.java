@@ -1,4 +1,4 @@
-package com.davingl.coletadepresenca;
+package com.davingl.coletadepresenca.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.davingl.coletadepresenca.R;
 
 public class PresencaRegistradaActivity extends AppCompatActivity {
 
