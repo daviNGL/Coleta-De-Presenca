@@ -1,8 +1,14 @@
 package com.davingl.coletadepresenca;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +16,13 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +40,14 @@ public class DisciplinasActivity extends AppCompatActivity {
 
     private Intent presencaRegistradaActivity;
     private Bundle bundle;
+
+    //Localizacao
+    private static final String TAG = "DisciplinasActivity";
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Boolean mLocationPermissionsGranted = false;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     //Vetor auxiliar de dias da semana
     private final String arrayDiasSemana[] =
@@ -53,16 +74,13 @@ public class DisciplinasActivity extends AppCompatActivity {
 
         //Exibe o dia e a hora no topo da tela
         exibeDataHora();
-
         //Seleciona a disciplina correta de acordo com o dia da semana
         selecionaDisciplina();
-
 
         //Seta a localização da UNICID
         localizacaoUnicid = new Location("locationUnicid");
         localizacaoUnicid.setLatitude(-23.53628);
         localizacaoUnicid.setLongitude(-46.56033);
-
     }
 
 
@@ -157,9 +175,6 @@ public class DisciplinasActivity extends AppCompatActivity {
 
 
 
-
-
-
     /**
      * Método ativado quando clica no botão de registrar presença
      */
@@ -171,7 +186,6 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Verifica se o usuário está na UNICID
         boolean localizazoesIguais = comparaLocalizacoes();
 
-
         if(localizazoesIguais){
             registraPresenca();
         }else{
@@ -181,7 +195,6 @@ public class DisciplinasActivity extends AppCompatActivity {
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 
         }
-
     }
 
 
@@ -214,7 +227,7 @@ public class DisciplinasActivity extends AppCompatActivity {
 
     /**
      * Compara a localização do usuário com a da Unicid
-     * @return
+     * @return bool
      */
     private boolean comparaLocalizacoes() {
 
@@ -234,18 +247,72 @@ public class DisciplinasActivity extends AppCompatActivity {
      * Busca a localização atual do usuário e salva em localizacaoUsuario
      */
     private void buscaLocalizacao() {
+        //Obtem permissao para localizacao
+        getLocationPermission();
 
-        //Precisa implementar esse método corretamente
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        try{
+            if(mLocationPermissionsGranted){
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "onComplete: localizacao encnotrada!");
+                            Location currentLocation = (Location) task.getResult();
+
+                            SetLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+
+                        }else{
+                            Log.d(TAG, "onComplete: current location is null");
+                            Toast.makeText(DisciplinasActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }catch (SecurityException e){
+            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
+        }
         ///////////////// LOCALIZAÇÃO FAKE ////////////////////
-//        this.localizacaoUsuario.setLatitude(35.72405);
-//        this.localizacaoUsuario.setLongitude(139.15889);
-
+        //this.localizacaoUsuario.setLatitude(35.72405);
+        //this.localizacaoUsuario.setLongitude(139.15889);
         //////////////// LOCALIZACAO UNICID ///////////////////
-        this.localizacaoUsuario.setLatitude(-23.53628);
-        this.localizacaoUsuario.setLongitude(-46.56033);
-
+        //this.localizacaoUsuario.setLatitude(-23.53628);
+        //this.localizacaoUsuario.setLongitude(-46.56033);
     }
 
+    private void SetLocation(LatLng latLng){
+        this.localizacaoUsuario.setLatitude(latLng.latitude);
+        this.localizacaoUsuario.setLongitude(latLng.longitude);
+    }
 
+    /**
+     * Obtem Permissao para localização
+     * @return bool
+     */
+    private void getLocationPermission(){
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionsGranted = true;
+                //initMap();
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                            LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
 }
