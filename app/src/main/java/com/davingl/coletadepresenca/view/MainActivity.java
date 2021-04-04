@@ -9,17 +9,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.davingl.coletadepresenca.R;
+import com.davingl.coletadepresenca.controller.UsuarioController;
 import com.davingl.coletadepresenca.dao.UsuarioDAO;
+import com.davingl.coletadepresenca.model.Usuario;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UsuarioDAO usuarioDao;          //Acesso a base de dados
     private EditText editTextRGM;           //RGM informado pelo usuario
     private EditText editTextSenha;         //Senha informada pelo usuario
     private TextView textViewErroAcesso;    //Label abaixo dos botões para exibir msg de erro
-    private Long rgm;                       //Auxiliar pra armazenar rgm
+
+    private String rgm;                     //Auxiliar pra armazenar rgm
     private String senha;                   //Auxiliar pra armazenar a senha
+
     private Intent disciplinasActivity;     //Activity que será chamada
+
+    private UsuarioController usuarioController;          //Acesso a base de dados
 
 
 
@@ -70,39 +75,47 @@ public class MainActivity extends AppCompatActivity {
     public void validaLogin(View view){
 
 
+        //Recupera rgm e senha do formulário de login
+        this.rgm    = this.editTextRGM.getText().toString();
+        this.senha  = this.editTextSenha.getText().toString();
 
-        //Tenta converter o rgm para um Long e seta no atributo "rgm"
-        try{
-            this.rgm = Long.parseLong( this.editTextRGM.getText().toString() );
-        }catch (NumberFormatException ex){
-            this.rgm = 0l;
+
+
+        //Verifica se o campo do RGM foi deixado em branco
+        if(this.rgm.isEmpty() || this.rgm == null){
+
+            this.textViewErroAcesso.setText("RGM inválido!");
+            return;
+
         }
 
 
-        //Recupera a senha e seta no atributo "senha"
-        this.senha = this.editTextSenha.getText().toString();
+
+        //Verifica se o campo da senha foi deixado em branco
+        if(this.senha.isEmpty() || this.senha == null){
+
+            this.textViewErroAcesso.setText("Senha inválida!");
+            return;
+
+        }
+
 
 
         //Busca o usuario na base de dados
-        this.usuarioDao = new UsuarioDAO(this.rgm, this.senha);
-        int acessoBase = this.usuarioDao.validaLogin();
+        this.usuarioController = new UsuarioController();
+        Usuario usuarioBuscado = this.usuarioController.buscarUsuario(this.rgm);
+
 
 
         //Verifica se o usuario foi encontrado na base
-        switch (acessoBase){
-            case 0:
-                //Vai para a outra activity
-                this.startActivity(this.disciplinasActivity);
-                break;
-            case 1:
-                this.textViewErroAcesso.setText("RGM inválido!");
-                break;
-            case 2:
-                this.textViewErroAcesso.setText("Senha incorreta!");
-                break;
-            default:
-                this.textViewErroAcesso.setText("Erro inesperado.");
-                break;
+        if(usuarioBuscado == null || !usuarioBuscado.getSenha().equals(this.senha)){
+
+            this.textViewErroAcesso.setText("Usuário ou senha inválidos.");
+
+        }else{
+
+            startActivity(this.disciplinasActivity);
+
         }
 
     }
