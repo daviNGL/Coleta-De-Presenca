@@ -176,10 +176,23 @@ public class DisciplinasActivity extends AppCompatActivity {
 
         //Verifica se o usuário está na UNICID
         boolean localizazoesIguais = AppUtil.compararLocalizacoes(this.localizacaoUsuario, localizacaoUnicid);
+        //Verifica se está dentro do horário de aula.
+        boolean horasIguais = AppUtil.compararHoras(this.diaDaSemanaNumero);
 
 
         if(localizazoesIguais){
-            registraPresenca();
+
+            if (horasIguais) {
+
+                registraPresenca();
+
+            } else {
+
+                String msg = "Fora do horário de aula.";
+
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+            }
+
         }else{
 
             String msg = "Usuário precisa estar localizado na Unicid.";
@@ -225,12 +238,12 @@ public class DisciplinasActivity extends AppCompatActivity {
         //Precisa implementar esse método corretamente
 
         ///////////////// LOCALIZAÇÃO FAKE ////////////////////
-        this.localizacaoUsuario.setLatitude(35.72405);
-        this.localizacaoUsuario.setLongitude(139.15889);
+//        this.localizacaoUsuario.setLatitude(35.72405);
+//        this.localizacaoUsuario.setLongitude(139.15889);
 
         //////////////// LOCALIZACAO UNICID ///////////////////
-//        this.localizacaoUsuario.setLatitude(-23.53628);
-//        this.localizacaoUsuario.setLongitude(-46.56033);
+        this.localizacaoUsuario.setLatitude(-23.53628);
+        this.localizacaoUsuario.setLongitude(-46.56033);
 
     }
 
