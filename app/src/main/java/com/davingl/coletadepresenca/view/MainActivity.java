@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onRestart() {
+
         super.onRestart();
 
         if (!this.editTextRGM.getText().toString().isEmpty()) {
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         //Verifica se o campo do RGM foi deixado em branco
         if(this.rgm.isEmpty() || this.rgm == null){
 
+            this.editTextRGM.setError("Campo obrigatório.");
             this.textViewErroAcesso.setText("RGM inválido!");
             return;
 
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         //Verifica se o campo da senha foi deixado em branco
         if(this.senha.isEmpty() || this.senha == null){
 
+            this.editTextSenha.setError("Campo obrigatório.");
             this.textViewErroAcesso.setText("Senha inválida!");
             return;
 
