@@ -9,6 +9,13 @@ import java.util.Date;
 
 public class AppUtil {
 
+    public static final double LATITUDE_UNICID = -23.53628;
+    public static final double LONGITUDE_UNICID = -46.56033;
+
+    //Vetor auxiliar de dias da semana
+    public static final String arrayDiasSemana[] =
+            {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
+
     /**
      * Retorna o dia da semana.
      * @return
@@ -30,15 +37,14 @@ public class AppUtil {
     }
 
     /**
-     * Compara se duas localizações são iguais
-     * @param location1 Localização 1
-     * @param location2 Localização 2
-     * @return
+     * Verifica se determinada localização está na UNICID.
+     * @param lat latitude.
+     * @param lon longitude.
+     * @return true se bater com a localização da UNICID, false se não bater.
      */
-    public static boolean compararLocalizacoes(Location location1, Location location2){
+    public static boolean checarLocalizacao(double lat, double lon){
 
-        return  (location1.getLatitude()    == location2.getLatitude() ) &&
-                (location1.getLongitude()   == location2.getLongitude() );
+        return lat == LATITUDE_UNICID && lon == LONGITUDE_UNICID;
 
     }
 
@@ -48,7 +54,7 @@ public class AppUtil {
      * @param diaDaSemanaNumero
      * @return
      */
-    public static boolean compararHoras(int diaDaSemanaNumero) {
+    public static boolean checarHorario(int diaDaSemanaNumero) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String horaSistema = new SimpleDateFormat("HH:mm:ss").format(new Date());

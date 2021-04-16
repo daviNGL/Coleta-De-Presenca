@@ -11,6 +11,7 @@
     <string name="str_registrarPResenca">Registrar Presença</string>
     <string name="str_Cancelar">Cancelar</string>
     <string name="str_registrada">Presença registrada</string>
+    <string name="str_localizacaoUnicid">Utilizar localizacao fake (Unicid)</string>
 
     <string-array name="disciplinasLista">
         <item>Linguagens Formais e Autômatos</item>
