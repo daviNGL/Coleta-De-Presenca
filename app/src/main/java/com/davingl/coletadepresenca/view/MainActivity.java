@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
 
             Bundle bundle = new Bundle();
-            bundle.putBoolean("isLocalFake", this.checkBoxLocalFake.isChecked());
+            bundle.putBoolean(getString(R.string.strUsarLozalizacaoFake), this.checkBoxLocalFake.isChecked());
 
             this.disciplinasActivity.putExtras(bundle);
 

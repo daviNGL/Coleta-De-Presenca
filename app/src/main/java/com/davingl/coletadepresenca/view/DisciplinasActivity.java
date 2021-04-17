@@ -47,6 +47,7 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
     LocationManager locationManager;
     double latitude;
     double longitude;
+    boolean usarLocalFake;
 
 
     @Override
@@ -64,32 +65,43 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
         this.bundleEntrada = this.getIntent().getExtras();
         this.presencaRegistradaActivity = new Intent(DisciplinasActivity.this, PresencaRegistradaActivity.class);
 
-        locationManager = (LocationManager) getApplication().getSystemService(Context.LOCATION_SERVICE);
+        this.usarLocalFake = this.bundleEntrada.getBoolean(getString(R.string.strUsarLozalizacaoFake));
 
-        //Exibe o dia e a hora no topo da tela
+
         exibirDataHora();
 
-        //Seleciona a disciplina correta de acordo com o dia da semana
         selecionarDisciplina();
 
-        
-        boolean permissaoOK = verificarPermissoes();
-        boolean gpsOK = verificarStatusGPS();
 
-        Log.i("APP_PERMI", "onCreate: -> " + permissaoOK + " - " + gpsOK);
+        if(usarLocalFake){
 
-        if (permissaoOK && gpsOK)
-            buscarLocalizacao();
-        else{
-            this.latitude = 0.0000;
-            this.longitude = 0.0000;
-            this.textViewLocalizacao.setText("Localização: 0.0000, 0.0000");
+            this.latitude = AppUtil.LATITUDE_UNICID;
+            this.longitude = AppUtil.LONGITUDE_UNICID;
+            this.textViewLocalizacao.setText("Localização: " + latitude + ", " + longitude);
+
+        }else {
+
+
+            locationManager = (LocationManager) getApplication().getSystemService(Context.LOCATION_SERVICE);
+
+            boolean permissaoOK = verificarPermissoes();
+            boolean gpsOK = verificarStatusGPS();
+
+            Log.i("APP_PERMI", "onCreate: -> " + permissaoOK + " - " + gpsOK);
+
+            if (permissaoOK && gpsOK)
+                buscarLocalizacao();
+            else {
+                this.latitude = 0.0000;
+                this.longitude = 0.0000;
+                this.textViewLocalizacao.setText("Localização: 0.0000, 0.0000");
+            }
+
+
+            Log.i("APP_PERMI", "onCreate: -> " + textViewLocalizacao.getText().toString());
+
+
         }
-
-
-
-        Log.i("APP_PERMI", "onCreate: -> " + textViewLocalizacao.getText().toString());
-
     }
 
     @Override
@@ -97,10 +109,21 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
 
         super.onResume();
 
-        //Busca a localização do usuario
-        buscarLocalizacao();
+        if(usarLocalFake){
+
+            this.latitude = AppUtil.LATITUDE_UNICID;
+            this.longitude = AppUtil.LONGITUDE_UNICID;
+            this.textViewLocalizacao.setText("Localização: " + latitude + ", " + longitude);
+
+        }else {
+
+            //Busca a localização do usuario
+            buscarLocalizacao();
+
+        }
 
     }
+
 
     private boolean verificarStatusGPS() {
 
@@ -173,7 +196,7 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
                 break;
             default:
                 this.spinnerDisciplinas.setSelection(5);
-                this.buttonRegistrarPresenca.setEnabled(false);
+                this.buttonRegistrarPresenca.setBackgroundColor(getColor(R.color.color_botao_desativado));
 
         }
 
@@ -216,6 +239,29 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
      * Método ativado quando clica no botão de registrar presença
      */
     public void btnRegistrar(View view) {
+
+        if(this.spinnerDisciplinas.getSelectedItemPosition() > 4){
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Não há nenhuma aula hoje");
+            alertDialog.setIcon(android.R.drawable.ic_dialog_info);
+            alertDialog.setMessage("Não há nenhuma disciplina programada para o dia de hoje, impossível registrar presença.");
+            alertDialog.setPositiveButton("Entendi", null);
+            alertDialog.show();
+
+            return;
+        }
+
+        if(usarLocalFake){
+
+            this.latitude = AppUtil.LATITUDE_UNICID;
+            this.longitude = AppUtil.LONGITUDE_UNICID;
+            this.textViewLocalizacao.setText("Localização: " + latitude + ", " + longitude);
+
+            registrarPresenca();
+
+        }
+
 
         boolean permissaoOK = verificarPermissoes();
 
@@ -339,18 +385,22 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
         textViewLocalizacao.setText(txtLocal);
     }
 
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
+
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
 
     }
 
+
     @Override
     public void onProviderDisabled(@NonNull String provider) {
 
     }
+
 }
