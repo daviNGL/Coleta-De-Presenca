@@ -258,7 +258,27 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
             this.longitude = AppUtil.LONGITUDE_UNICID;
             this.textViewLocalizacao.setText("Localização: " + latitude + ", " + longitude);
 
-            registrarPresenca();
+            //Verifica se está dentro do horário de aula.
+            boolean horarioOK = AppUtil.checarHorario(this.diaDaSemanaNumero);
+
+            if(horarioOK){
+
+                registrarPresenca();
+
+            }else{
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle("Erro ao registrar presença");
+                alertDialog.setIcon(android.R.drawable.ic_delete);
+                alertDialog.setMessage("Fora do horario de aula, tente novamente mais tarde.");
+                alertDialog.setPositiveButton("Fechar", null);
+                alertDialog.show();
+
+                return;
+
+            }
+
+
 
         }
 

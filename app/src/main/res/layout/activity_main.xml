@@ -111,15 +111,15 @@
 
     <TextView
         android:id="@+id/textViewErroAcesso"
-        android:layout_width="0dp"
+        android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/color_vermelha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSenha"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxLocalizacaoFake"
+        app:layout_constraintVertical_bias="0.110000014" />
 
     <CheckBox
         android:id="@+id/checkBoxLocalizacaoFake"
