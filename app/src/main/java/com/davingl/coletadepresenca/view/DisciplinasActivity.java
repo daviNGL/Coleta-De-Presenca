@@ -265,6 +265,8 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
 
                 registrarPresenca();
 
+                return;
+
             }else{
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -350,7 +352,7 @@ public class DisciplinasActivity extends AppCompatActivity implements LocationLi
         //Passa o bundle pra Activity
         this.presencaRegistradaActivity.putExtras(this.bundle);
 
-        startActivity(this.presencaRegistradaActivity);
+        startActivity(presencaRegistradaActivity);
 
     }
 
